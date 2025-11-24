@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "FireML Firewall",
+  "version": "0.1.0",
+  "description": "Blocks suspicious URLs by consulting the FireML local predictor.",
+  "permissions": [
+    "storage",
+    "tabs",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background/background.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["ui/index.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "action": {
+    "default_title": "FireML Firewall"
+  }
+}
+

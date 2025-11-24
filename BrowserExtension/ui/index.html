@@ -1,0 +1,101 @@
+<!-- Common UI to show in case of URL detection-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>FireML Alert</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            background: #1e293b;
+            padding: 2rem;
+            border-radius: 10px;
+            width: min(90vw, 480px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            text-align: center;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.35rem 0.9rem;
+            border-radius: 999px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .badge-safe { background: #15803d; }
+        .badge-suspicious { background: #b91c1c; }
+        .url {
+            margin: 1rem 0;
+            word-break: break-all;
+            font-size: 0.95rem;
+            color: #94a3b8;
+        }
+        .actions {
+            margin-top: 1.5rem;
+        }
+        button {
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            background: #2563eb;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div id="badge" class="badge">Decision</div>
+        <p class="url" id="urlText">Waiting for URL...</p>
+        <p id="message">Analyzing...</p>
+        <div class="actions">
+            <button id="closeBtn">Close Tab</button>
+        </div>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);  // object to get URL params
+        const decision = (params.get('decision') || 'safe').toLowerCase();
+        const targetUrl = params.get('url') || 'Unknown URL';
+
+        const badge = document.getElementById('badge');
+        const urlText = document.getElementById('urlText');
+        const message = document.getElementById('message');
+
+        const decisionCopy = {
+            safe: {
+                label: 'Safe',
+                text: 'This URL passed the latest scan.',
+                badgeClass: 'badge-safe'
+            },
+            suspicious: {
+                label: 'Suspicious',
+                text: 'Blocked because it matches malicious patterns.',
+                badgeClass: 'badge-suspicious'
+            }
+        };
+
+        const copy = decisionCopy[decision] || decisionCopy.safe;
+        badge.textContent = copy.label;
+        badge.classList.add(copy.badgeClass);
+        urlText.textContent = targetUrl;
+        message.textContent = copy.text;
+
+        document.getElementById('closeBtn').addEventListener('click', () => {
+            chrome?.tabs ? chrome.tabs.remove?.(chrome.devtools?.inspectedWindow?.tabId) : window.close();
+            window.close();
+        });
+    </script>
+</body>
+</html>

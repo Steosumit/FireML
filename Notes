@@ -1,0 +1,24 @@
+1. url: AnyHttpUrl = Field(..., alias='check_url', description='URL to evaluate')
+
+Defines a field named url in the model.
+AnyHttpUrl is a Pydantic type — it ensures the value is a valid HTTP/HTTPS URL.
+Field(...) means:
+... → this field is required (must be provided).
+alias='check_url' → when receiving JSON input, the key will be check_url, not url.
+
+2. Use of _model_lock
+_model_lock = Lock() object does this
+- locks a instance block run to avoid another run to execute it
+- if a block is in locked state it waits for its release
+
+3. Converting types to a single model type using validator.py:
+The input payload can come in three forms : PredictRequestModel, str, Mapping(dictionary)
+To process all to a single PredictRequestModel type, we use a validator using isinstance function
+    def _coerce_request(payload: Union[PredictRequestModel, str, Mapping]) -> PredictRequestModel:
+        if isinstance(payload, PredictRequestModel):
+            return payload
+        if isinstance(payload, str):
+            return PredictRequestModel(check_url=payload)
+        if isinstance(payload, Mapping):
+            return PredictRequestModel(**payload)
+        raise RequestValidationError("Unsupported payload type for validation")
