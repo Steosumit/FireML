@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FireML Settings</title>
+    <style>
+        body {
+            width: 350px;
+            padding: 16px;
+            font-family: Arial, sans-serif;
+            background: #f8fafc;
+            margin: 0;
+        }
+        .header {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 16px;
+        }
+        .section {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 12px;
+        }
+        .toggle-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .toggle-label {
+            font-size: 13px;
+            color: #475569;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #cbd5e1;
+            transition: .3s;
+            border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #2563eb;
+        }
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+        .input-group {
+            margin-bottom: 12px;
+        }
+        .input-label {
+            display: block;
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            font-size: 13px;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: #2563eb;
+        }
+        .btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+        .btn-primary:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+        }
+        .status-message {
+            margin-top: 8px;
+            font-size: 12px;
+            text-align: center;
+            padding: 6px;
+            border-radius: 4px;
+        }
+        .status-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+        .status-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .info-text {
+            font-size: 11px;
+            color: #64748b;
+            margin-top: 6px;
+            line-height: 1.4;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">FireML: LLM Powered Wall</div>
+
+    <!-- ML Model Section -->
+    <div class="section">
+        <div class="section-title">ML Model Detection</div>
+        <div class="toggle-container">
+            <span class="toggle-label">Enable Local ML Model</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="enableML" checked>
+                <span class="slider"></span>
+            </label>
+        </div>
+        <p class="info-text">Uses local RandomForest model for URL classification</p>
+    </div>
+
+    <!-- Gemini API Section -->
+    <div class="section">
+        <div class="section-title">Gemini AI Detection</div>
+        <div class="toggle-container">
+            <span class="toggle-label">Enable Gemini API</span>
+            <label class="toggle-switch">
+                <input type="checkbox" id="enableGemini">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <div id="geminiConfig" class="hidden">
+            <div class="input-group">
+                <label class="input-label" for="geminiApiKey">Gemini API Key</label>
+                <input
+                    type="password"
+                    id="geminiApiKey"
+                    placeholder="Enter your Gemini API key"
+                    autocomplete="off"
+                />
+            </div>
+            <button class="btn btn-primary" id="saveGeminiKey">Save API Key</button>
+            <div id="statusMessage" class="status-message hidden"></div>
+        </div>
+
+        <p class="info-text">Uses Google Gemini AI for advanced URL analysis</p>
+    </div>
+
+    <!-- Status Section -->
+    <div class="section">
+        <div class="section-title">Status</div>
+        <div style="font-size: 12px; color: #475569;">
+            <div style="margin-bottom: 4px;">
+                <span>ML Model: </span>
+                <span id="mlStatus" style="font-weight: 600; color: #16a34a;">Active</span>
+            </div>
+            <div>
+                <span>Gemini API: </span>
+                <span id="geminiStatus" style="font-weight: 600; color: #64748b;">Disabled</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
+

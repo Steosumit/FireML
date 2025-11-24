@@ -92,7 +92,7 @@ async function intercept_url(details) {
 // show_alert(decision, url)
 function show_alert(decision, url) {
     if (!ALERT_PAGE_URL) {
-        console.warn(`[FireML] ${decision?.toUpperCase?.() || decision}: ${url}`);
+        console.warn(`[FireML] - ${decision?.toUpperCase?.() || decision}: ${url}`);
         return;
     }
 

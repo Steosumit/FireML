@@ -22,7 +22,8 @@
     }
   ],
   "action": {
-    "default_title": "FireML Firewall"
+    "default_title": "FireML Firewall",
+    "default_popup": "popup.html"
   }
 }
 
