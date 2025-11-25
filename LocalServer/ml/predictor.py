@@ -30,19 +30,37 @@ def extract_features(url: str) -> Tuple[List[float], Dict[str, float]]:
     ratio_digits_host = (
         sum(ch.isdigit() for ch in hostname) / host_len if host_len else 0.0
     )
+
     avg_words_raw = _average_word_length(url)
     avg_word_path = _average_word_length(path)
+    # new features
+    ratio_digits_url = (
+        sum(ch.isdigit() for ch in url) / len(url) if len(url) else 0.0
+    )
+    avg_word_host = _average_word_length(hostname)
 
+
+    """
+ratio_digits_url
+ratio_digits_host
+avg_words_raw
+avg_word_host
+avg_word_path
+    """
     features = [
+        ratio_digits_url,
         ratio_digits_host,
         avg_words_raw,
-        avg_word_path,
+        avg_word_host,
+        avg_word_path
     ]
 
     feature_map = {
+        "ration_digits_url": ratio_digits_url,
         "ratio_digits_host": ratio_digits_host,
         "avg_words_raw": avg_words_raw,
-        "avg_word_path": avg_word_path,
+        "avg_word_host": avg_word_host,
+        "avg_word_path": avg_word_path
     }
 
     return features, feature_map
@@ -73,7 +91,9 @@ def predict_url_with_ml(url: str, model=None) -> Dict:
     Returns:
         Dict with decision, score, features, and source
     """
+    print("[ML MODEL] loading in predict_url_with_ml")
     model = model or model_loader.load_model()
+    
     features, feature_map = extract_features(url)
     decision, score = _model_predict(model, features)
     return {
