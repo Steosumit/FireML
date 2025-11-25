@@ -279,8 +279,8 @@ Contributions are welcome! Here's how you can help:
 ### Development Setup
 
 ```bash
-# Clone your fork
-git clone https://github.com/YOUR_USERNAME/FireML.git
+# Fork the repository first, then clone your fork
+git clone https://github.com/<your-username>/FireML.git
 
 # Install development dependencies
 cd LocalServer
