@@ -19,15 +19,6 @@
             </PendingDiffInfo>
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/LocalServer/ml/model_loader.py">
-          <value>
-            <PendingDiffInfo>
-              <option name="filePath" value="$PROJECT_DIR$/LocalServer/ml/model_loader.py" />
-              <option name="originalContent" value="# Code to load model&#10;from pathlib import Path&#10;from threading import Lock&#10;from typing import Optional&#10;import joblib&#10;&#10;DEFAULT_MODEL_PATH = Path(__file__).resolve().parents[1] / &quot;model&quot; / &quot;url_classifier_RandomForest_CPU.pkl&quot;&#10;_model: Optional[object] = None&#10;_model_lock = Lock()  # for thread safe operation (read Notes for details)&#10;&#10;def load_model(path: Optional[Path] = None):&#10;    &quot;&quot;&quot;Load the ML model once and cache it for future predictions.&quot;&quot;&quot;&#10;    global _model&#10;&#10;    if _model is not None:&#10;        return _model&#10;&#10;    resolved_path = Path(path or DEFAULT_MODEL_PATH).expanduser().resolve()&#10;&#10;    with _model_lock:&#10;        if _model is None:&#10;            if not resolved_path.exists():&#10;                raise FileNotFoundError(f&quot;Model file not found at {resolved_path}&quot;)&#10;            _model = joblib.load(resolved_path)  # load the model if it is not laoded yet&#10;    return _model&#10;&#10;&#10;def reload_model(path: Optional[Path] = None):&#10;    &quot;&quot;&quot;Force reload the model, useful during development/testing.&quot;&quot;&quot;&#10;    global _model&#10;    _model = None&#10;    return load_model(path)&#10;" />
-              <option name="updatedContent" value="# Code to load model&#10;from pathlib import Path&#10;from threading import Lock&#10;from typing import Optional&#10;import joblib&#10;&#10;DEFAULT_MODEL_PATH = Path(__file__).resolve().parents[1] / &quot;model&quot; / &quot;url_classifier_RandomForest_CPU.pkl&quot;&#10;_model: Optional[object] = None&#10;_model_lock = Lock()  # for thread safe operation (read Notes for details)&#10;&#10;def load_model(path: Optional[Path] = None):&#10;    &quot;&quot;&quot;Load the ML model once and cache it for future predictions.&quot;&quot;&quot;&#10;    global _model&#10;&#10;    if _model is not None:&#10;        return _model&#10;&#10;    resolved_path = Path(path or DEFAULT_MODEL_PATH).expanduser().resolve()&#10;&#10;    with _model_lock:&#10;        if _model is None:&#10;            if not resolved_path.exists():&#10;                raise FileNotFoundError(f&quot;Model file not found at {resolved_path}&quot;)&#10;            _model = joblib.load(resolved_path)  # load the model if it is not laoded yet&#10;    return _model&#10;&#10;&#10;def reload_model(path: Optional[Path] = None):&#10;    &quot;&quot;&quot;Force reload the model, useful during development/testing.&quot;&quot;&quot;&#10;    global _model&#10;    _model = None&#10;    return load_model(path)&#10;" />
-            </PendingDiffInfo>
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/LocalServer/requirements.txt">
           <value>
             <PendingDiffInfo>

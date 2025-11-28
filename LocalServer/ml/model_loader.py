@@ -4,7 +4,7 @@ from threading import Lock
 from typing import Optional
 import joblib
 
-DEFAULT_MODEL_PATH = Path(__file__).resolve().parents[1] / "model" / "url_classifier_LightGBM_GPU_latest.pkl"
+DEFAULT_MODEL_PATH = Path(__file__).resolve().parents[1] / "model" / "GradientBoosting_CPU.pkl"
 _model: Optional[object] = None
 _model_lock = Lock()  # for thread safe operation (read Notes for details)
 
